@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <script src="vNode.js"></script>
+  <script src="web-box.js"></script>
+</head>
+<body>
+  <div id="app"></div>
+  <p>asdawdawd</p>
+
+  <script>
+  Box.createTemp('user-temp', `
+    <div class="user-intro">
+      <h3>Johnny</h3>
+      <p>Welcome to my place!!</p>
+    </div>
+  `);
+
+  Box.createStyle('app', `
+    p {
+      color:red;
+    }
+  `);
+
+  const app = new Box('#app', {
+    shadow: true,
+    style: Box.styles.app,
+    template: `
+      <div>
+        <p onclick="popAlert()">Hello World</p>
+      </div>
+    `
+  });
+
+  </script>
+</body>
+</html>
