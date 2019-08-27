@@ -45,7 +45,7 @@
     return document.body.insertAdjacentElement('afterbegin', temp);
   }
 
-  const createStyle = (id, css) => {
+  const createStyleToBox = (id, css) => {
     return Box.styles[id] = css;
   }
 
@@ -59,17 +59,20 @@
     })
   }
 
+  const createStyle = text => {
+    let styleNode = document.createElement('style');
+    let styleText = document.createTextNode(text);
+    styleNode.appendChild(styleText);
+    return styleNode;
+  }
+
 
   /*  */
 
 
   const Box = function(id, { template, style, shadow = false }) {
     const self = this;
-    def(self, 'node', {
-      get() {
-        return document.querySelector(id);
-      }
-    });
+    def(self, 'node', {get() { return document.querySelector(id); }});
     // template 接受字串與node內容
     self.template = isString(template) ? getNode(template) : template;
     self.shadowRoot = null;
@@ -77,10 +80,7 @@
 
     // Style
     if (style) {
-      let styleNode = document.createElement('style');
-      let styleText = document.createTextNode(style);
-      styleNode.appendChild(styleText);
-      self.style = styleNode;
+      self.style = createStyle(style);
     }
 
     // Shadow
@@ -103,7 +103,7 @@
   Box.createTemp = createTemp;
   Box.getTemp = getTemp;
   Box.styles = Object.create(null);
-  Box.createStyle = createStyle;
+  Box.createStyle = createStyleToBox;
   
   return Box;
 
